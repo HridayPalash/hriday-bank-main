@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Bank Withdraw system design</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    
+</head>
+<body>
+ <div id="login-area">
+    <h1 class="text-center">Welcome To Hriday Bank</h1>
+    <div class="submit-area">
+        <h4>Login</h4>
+        <input type="text" class="form-control" placeholder="Email">
+        <input type="password" class="form-control" placeholder="Password">
+        <button id="login" class="btn btn-success">Enter</button>
+    </div>
+ </div>
+ <section id="transaction-area">
+     <div class="row">
+         <div class="col-md-4">
+            <div class="deposit status">
+                <h4>Deposit</h4>
+                <h1>$ <span id="currentDeposit">00</span></h1>
+            </div>
+         </div>
+         <div class="col-md-4">
+            <div class="withdraw status">
+                <h4>Withdraw</h4>
+                <h1>$ <span id="currentWithdraw">00</span></h1>
+            </div>
+         </div>
+         <div class="col-md-4">
+            <div class="balance status">
+                <h4>Balance</h4>
+                <h1>$ <span id="currentBalance">1240</span></h1>
+            </div>
+         </div>
+     </div>
+     <div class="row">
+         <div class="col-md-6">
+             <div class="submit-area">
+                 <h5>Diposit</h5>
+                 <input id="depositInput" class="form-control" type="text" placeholder="$ amount you want to deposit">
+                 <button id="depositAmount" class="btn btn-success">Diposit</button>
+             </div>
+         </div>
+         <div class="col-md-6">
+             <div class="submit-area">
+                 <h5>Withdraw</h5>
+                 <input id="withdrawAmount" class="form-control" type="text" placeholder="$ amount you want to withdraw">
+                 <button id="addWithdraw" class="btn btn-success">Withdraw</button>
+             </div>
+         </div>
+     </div>
+ </section>
+ <script>
+    //  Login area
+     const loginItem=document.getElementById('login');
+     loginItem.addEventListener('click', function (event) {
+         const loginArea=document.getElementById('login-area');
+         loginArea.style.display="none";
+         const transactionArea= document.getElementById('transaction-area');
+         transactionArea.style.display="block";
+     })
+    //  Deposit Area
+    const depositNumber = document.getElementById('depositAmount');
+    depositNumber.addEventListener('click', function () {
+        
+        const addingDeposit= getInputNumber('depositInput');
+
+
+        updateSpanText('currentDeposit', addingDeposit);
+        updateSpanText('currentBalance', addingDeposit);
+
+        document.getElementById('depositInput').value = "";   
+    })
+    // Withdraw Area
+    const withdrawBtn=document.getElementById('addWithdraw');
+    withdrawBtn.addEventListener('click', function () {
+       const withdrawAmountNumber = getInputNumber('withdrawAmount');
+       
+       updateSpanText('currentWithdraw', withdrawAmountNumber);
+       updateSpanText('currentBalance', -1 * withdrawAmountNumber);
+       document.getElementById('withdrawAmount').value="";
+    })
+
+    function getInputNumber(id) {
+        const amount= document.getElementById(id).value
+        const amountNumber= parseFloat(amount);
+        return amountNumber;
+    }
+
+
+    function updateSpanText(id, addingDeposit) {
+        const currentBalance = document.getElementById(id).innerText;
+        const currentAmount = parseFloat(currentBalance);
+        const totalBalance = addingDeposit + currentAmount;
+        document.getElementById(id).innerText = totalBalance;
+    }
+ </script>
+    <!-- JS FILES -->
+    <script src="js/jquery.slim.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+</html>
